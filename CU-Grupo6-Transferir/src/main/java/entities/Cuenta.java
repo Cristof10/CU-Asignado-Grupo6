@@ -98,6 +98,15 @@ public class Cuenta implements Serializable {
 	public static List<Cuenta> getAll() {
 		return null;
 	}
+	
+	public static List<Cuenta> getAllDestinos(String idCuentaOrigen) {
+		EntityManager em = Persistence.createEntityManagerFactory("persistencia").createEntityManager();
+		String consulta = "SELECT c FROM Cuenta c where c.idCuenta <> : idCuentaOrigen";
+		Query query = em.createQuery(consulta);
+		query.setParameter("idCuentaOrigen", idCuentaOrigen);
+		
+		return (List<Cuenta>)query.getResultList();
+	}
 
 	/**
 	 * @return

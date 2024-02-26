@@ -89,7 +89,8 @@ public class Categoria implements Serializable {
      * @return
      */
     public static Categoria getById(int idCategoria) {
-    	return null;
+    	EntityManager em =Persistence.createEntityManagerFactory("persistencia").createEntityManager();
+		return em.find(Categoria.class, idCategoria);
     }
 
     /**
@@ -147,6 +148,15 @@ public class Categoria implements Serializable {
     public static List<Categoria> getSumarizedByDate(int mes ) {
         
         return null;
+    }
+    
+    public Categoria getAllOfTransferType(){
+    	EntityManager em = Persistence.createEntityManagerFactory("persistencia").createEntityManager();
+    	String consulta = "SELECT t FROM Categoria t WHERE t.tipo = :transferencia";
+    	Query query = em.createQuery(consulta);
+    	query.setParameter("transferencia", TipoMovimiento.TRANSFERENCIA);
+    	
+    	return (Categoria)query.getSingleResult();
     }
 
 }
