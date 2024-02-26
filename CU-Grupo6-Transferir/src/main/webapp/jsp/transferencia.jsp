@@ -8,8 +8,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/styleTransferencia.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/styleTransferencia.css">
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 </head>
 
@@ -35,7 +35,7 @@
         <main class="main_pagina_principal">
             <div class="contenedor_default dash_head " style="margin-bottom: 0px">
                 <header class="header_contenedor">
-                    <h3>Efectivo</h3>
+                    <h3>${cuenta.nombre}</h3>
                     <button class="boton boton2 color_inactivo_boton">
                         <iconify-icon class="icono" icon="carbon:view-filled" width="18"></iconify-icon>
                     </button>
@@ -43,7 +43,7 @@
                 <main class="balance">
                     <iconify-icon class="icono" icon="cryptocurrency:usd" style="color: white;"
                         width="32"></iconify-icon>
-                    <h1>3000.00</h1>
+                    <h1>${cuenta.total}</h1>
                 </main>
             </div>
 
@@ -59,23 +59,22 @@
 
             <div class="contenedor_default dash_head" style="margin-bottom: 0px">
                 <header class="header_contenedor">
-                    <h3>Tarjeta</h3>
+                    <h3>Cuenta a Transferir</h3>
                     <div class="botones_remitente">
                         <button class="boton boton2 color_inactivo_boton">
                             <iconify-icon class="icono" icon="carbon:view-filled" width="18"></iconify-icon>
                         </button>
-                        <select name="tipo" id="tipo" class="select-banco-boton">
-                            <option value="0"></option>
-                            <option value="1">Banco</option>
-                            <option value="2">Efectivo</option>
-                            <option value="3">Tarjeta</option>
+                        <select name="idCuenta" id="tipo${cuenta.id}"class="select-banco-boton">                          
+                            <c:forEach items="${cuenta}" var="cuenta">
+	                    		<option value="${cuenta.id}">${cuenta.nombre}</option>
+	                		</c:forEach>
                         </select>
                     </div>
                 </header>
                 <main class="balance">
                     <iconify-icon class="icono" icon="cryptocurrency:usd" style="color: white;"
                         width="32"></iconify-icon>
-                    <h1>1000.00</h1>
+                    <h1>${cuenta.total}</h1>
                 </main>
             </div>
 
@@ -83,18 +82,19 @@
 
         <div class="contenedor-transferencia">
             <p class="titulo">Datos Transferencia</p>
-            <form class="form-agregar-cuenta" action="dashboard.html">
+            <form class="form-agregar-cuenta" action="RegistrarMovimientosController?ruta=guardartransferencia" method="post">
                 <label for="nombre">Ingresa el monto a transferir </label>
-                <input type="text" name="nombre" class="txt-nombre-banco" placeholder="Nombre de Cuenta">
+                <input type="text" name="nombre" class="txt-nombre-banco" placeholder="Monto" pattern="^\d+(\.\d{1,2})?$">
                 <label for="concepto">Ingresa el motivo de transferencia </label>
                 <input type="text" name="concepto" class="txt-nombre-banco" placeholder="Motivo de transferencia">
+                <label for="fecha">Ingresa la Fecha </label>
+                <input type="date" name="fecha" class="fecha-transferencia" placeholder="Fecha de transferencia">
                 <label for="tipo">Selecciona categoria de la Cuenta</label>
-                <select name="tipo" id="tipo" class="select-categoria">
-                    <option value="0">Seleccione una categoria</option>
-                    <option value="1">Comida</option>
-                    <option value="2">Transferencia</option>
-                    <option value="3">NÃ³mina</option>
-                    <option value="4">Universidad</option>
+                
+                <select name="idCategoria" id="tipo" class="select-categoria">
+                    <c:forEach items="${categorias}" var="categoria">
+	                    <option value="${categoria.id}">${categoria.nombre}</option>
+	                </c:forEach>
                 </select>
                 
                 <div class="btn-confirmacion">
