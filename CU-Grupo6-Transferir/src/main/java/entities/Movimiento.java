@@ -26,12 +26,28 @@ import javax.persistence.TemporalType;
 public class Movimiento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	/**
 	 * Default constructor
 	 */
 	public Movimiento() {
 	}
+	
+
+	public Movimiento(Integer id, Date fecha, double monto, String concepto, TipoMovimiento tipo, Cuenta origen,
+			Cuenta destino, Categoria categoria) {
+		super();
+		this.id = id;
+		this.fecha = fecha;
+		this.monto = monto;
+		this.concepto = concepto;
+		this.tipo = tipo;
+		this.origen = origen;
+		this.destino = destino;
+		this.categoria = categoria;
+	}
+
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,6 +77,9 @@ public class Movimiento implements Serializable {
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "id")
 	private Categoria categoria;
+	
+
+
 
 	public Integer getId() {
 		return id;
@@ -164,27 +183,20 @@ public class Movimiento implements Serializable {
 		return false;
 	}
 
-	/**
-	 * @param id
-	 * @return
-	 */
+
 	public boolean delete(int id) {
 		// TODO implement here
 		return false;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Movimiento> getAllByCuenta(int idCuenta) {
-		return null;
-	}
-	
 	public static List<Movimiento> getAllByDate(Date fecha){
-		return null;
-	}
-
-	@Override
-	public String toString() {
-		return this.concepto + " " + this.getCategoria().getId();
+		EntityManager em = Persistence.createEntityManagerFactory("persistencia").createEntityManager();
+    	String consultaJPQL = "SELECT t FROM Movimiento t";
+    	Query query =  em.createQuery(consultaJPQL);
+    	
+    	
+    	return (List<Movimiento>)query.getResultList();
 	}
 
 }

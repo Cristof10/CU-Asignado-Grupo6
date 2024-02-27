@@ -110,7 +110,8 @@ public class Cuenta implements Serializable {
 
 	/**
 	 * @return
-	 */
+	 * */
+	 
 	@SuppressWarnings("unchecked")
 	public static List<Cuenta> getSumarized() {
 		EntityManager em=  Persistence.createEntityManagerFactory("persistencia").createEntityManager();

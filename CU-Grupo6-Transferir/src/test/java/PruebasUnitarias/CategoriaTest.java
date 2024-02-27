@@ -13,8 +13,19 @@ class CategoriaTest {
 	@Test
 	void testGetAllOfIngresoType() {
 		List<Categoria> categorias = Categoria.getAllOfIngresoType();
-		assertEquals(3, categorias.size());
+		assertEquals(1, categorias.size());
 		
 	}
+	
+	@Test
+	void testGetAllOfTransferType() {
+		Categoria categoria = Categoria.getAllOfTransferType();
+		assertEquals("Tranferencia", categoria.getNombre());
+		
+	}
+	
+	
+	
+	
 
 }

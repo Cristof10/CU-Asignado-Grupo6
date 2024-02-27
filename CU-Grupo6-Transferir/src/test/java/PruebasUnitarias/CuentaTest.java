@@ -10,8 +10,8 @@ class CuentaTest {
 
 	@Test
 	void testGetById() {
-		Cuenta cuenta = Cuenta.getById(2);
-		assertEquals(30, cuenta.getTotal());
+		Cuenta cuenta = Cuenta.getById(1);
+		assertEquals(500, cuenta.getTotal());
 	}
 
 }

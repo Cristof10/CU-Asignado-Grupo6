@@ -14,9 +14,6 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.Table;
 
-/**
- * @author Carlos Iñiguez
- */
 @Entity
 @Table(name="Categoria")
 public class Categoria implements Serializable {
@@ -150,7 +147,7 @@ public class Categoria implements Serializable {
         return null;
     }
     
-    public Categoria getAllOfTransferType(){
+    public static Categoria getAllOfTransferType(){
     	EntityManager em = Persistence.createEntityManagerFactory("persistencia").createEntityManager();
     	String consulta = "SELECT t FROM Categoria t WHERE t.tipo = :transferencia";
     	Query query = em.createQuery(consulta);
