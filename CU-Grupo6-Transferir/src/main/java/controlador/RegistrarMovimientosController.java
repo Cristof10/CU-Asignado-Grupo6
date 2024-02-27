@@ -41,16 +41,18 @@ public class RegistrarMovimientosController extends HttpServlet {
 		String ruta = (request.getParameter("ruta") != null) ? request.getParameter("ruta") : "ver";
 
 		switch (ruta) {
-		case "nuevoingreso":
+		case "nuevoIngreso":
+			nuevoIngreso(request, response);
+			break;
+		case "nuevaTransferencia":
 			nuevoIngreso(request, response);
 			break;
 		}
 
 	}
 
-	private void nuevaTransferencia(HttpServletRequest request, HttpServletResponse response) 
-			throws ServletException, IOException {
-		/*
+	private void nuevaTransferencia(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		//1.- Obtengo Datos
 		int idcuentaOrigen = Integer.parseInt(request.getParameter("idCuentaOrigen"));
 		//2.- Llamar al modelo
@@ -63,7 +65,7 @@ public class RegistrarMovimientosController extends HttpServlet {
 		request.setAttribute("cuentasDestino", cuentasDestino);
 		request.setAttribute("categoria", categoria);
 		request.getRequestDispatcher("/jsp/transferencia.jsp").forward(request, response);
-		*/
+		
 	}
 
 	private void nuevoGasto(HttpServletRequest request, HttpServletResponse response) {
@@ -94,10 +96,9 @@ public class RegistrarMovimientosController extends HttpServlet {
 
 	}
 
-	private void guardarTransferencia(HttpServletRequest request, HttpServletResponse response) 
-			throws ParseException {
+	private void guardarTransferencia(HttpServletRequest request, HttpServletResponse response) throws ParseException {
 		// TODO Auto-generated method stub
-		/*
+	/*	
 		//1.- Obtener Datos
 		String concepto = request.getParameter("concepto");
 		
@@ -119,10 +120,12 @@ public class RegistrarMovimientosController extends HttpServlet {
         Cuenta cuentaDestino = Cuenta.getById(idCuentaDestino);
         Categoria categoria = Categoria.getById(idCategoria);
         Movimiento movTransferencia = new Movimiento();//Por revisar metodo
-        Movimiento movimiento = movTransferencia.createTransferencia(movTransferencia, movTransferencia);
+        boolean movimiento = movTransferencia.createTransferencia(movTransferencia, movTransferencia);
         
-        */
- 
+     // 3.- llamo a la vista
+        request.getRequestDispatcher("/DashboardController?ruta=ver").forward(request, response);
+*/
+        
 	}
 
 	private void guardarEgreso(HttpServletRequest request, HttpServletResponse response) {
