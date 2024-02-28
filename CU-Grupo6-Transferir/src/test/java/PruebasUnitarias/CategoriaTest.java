@@ -19,7 +19,7 @@ class CategoriaTest {
 	
 	@Test
 	void testGetAllOfTransferType() {
-		Categoria categoria = Categoria.getAllOfTransferType();
+		Categoria categoria = Categoria.getCategoriaTransferencia();
 		assertEquals("Tranferencia", categoria.getNombre());
 		
 	}

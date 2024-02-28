@@ -50,7 +50,7 @@ class MovimientoTest {
         TipoMovimiento tipoIngreso = TipoMovimiento.INGRESO; 
         Cuenta origen = Cuenta.getById(1);
         Cuenta destino = Cuenta.getById(2);
-        Categoria categoria = Categoria.getAllOfTransferType();
+        Categoria categoria = Categoria.getCategoriaTransferencia();
 
         // Crear una instancia de Movimiento utilizando el constructor
         Movimiento egreso = new Movimiento(fecha, monto, concepto, tipoEgreso, origen, destino, categoria);

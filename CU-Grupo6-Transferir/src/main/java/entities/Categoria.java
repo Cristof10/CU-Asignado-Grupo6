@@ -147,7 +147,7 @@ public class Categoria implements Serializable {
     }
     
     @SuppressWarnings("unchecked")
-	public static Categoria getAllOfTransferType(){
+	public static Categoria getCategoriaTransferencia(){
     	EntityManager em = Persistence.createEntityManagerFactory("persistencia").createEntityManager();
     	String consulta = "SELECT t FROM Categoria t WHERE t.tipo = :transferencia";
     	Query query = em.createQuery(consulta);
