@@ -100,9 +100,10 @@ public class Cuenta implements Serializable {
 		return null;
 	}
 	
-	public static List<Cuenta> getAllDestinos(String idCuentaOrigen) {
+	@SuppressWarnings("unchecked")
+	public static List<Cuenta> getAllDestinos(int idCuentaOrigen) {
 		EntityManager em = Persistence.createEntityManagerFactory("persistencia").createEntityManager();
-		String consulta = "SELECT c FROM Cuenta c where c.idCuenta <> : idCuentaOrigen";
+		String consulta = "SELECT c FROM Cuenta c WHERE c.id <> :idCuentaOrigen";
 		Query query = em.createQuery(consulta);
 		query.setParameter("idCuentaOrigen", idCuentaOrigen);
 		

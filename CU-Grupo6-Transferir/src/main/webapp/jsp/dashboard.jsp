@@ -81,7 +81,7 @@
 										width="18"></iconify-icon> <span class="texto_boton">Retirar</span>
 								</a> 
 								
-								<a href="RegistrarMovimientosController?ruta=nuevatransferencia&idCuenta=${cuenta.id}"> <iconify-icon icon="mingcute:transfer-fill"
+								<a href="RegistrarMovimientosController?ruta=nuevaTransferencia&idCuentaOrigen=${cuenta.id}"> <iconify-icon icon="mingcute:transfer-fill"
 										width="18"></iconify-icon> <span class="texto_boton">Transferir</span>
 								</a>
 

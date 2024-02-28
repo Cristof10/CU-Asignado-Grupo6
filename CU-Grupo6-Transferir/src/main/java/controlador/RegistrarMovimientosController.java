@@ -41,25 +41,29 @@ public class RegistrarMovimientosController extends HttpServlet {
 		String ruta = (request.getParameter("ruta") != null) ? request.getParameter("ruta") : "ver";
 
 		switch (ruta) {
+		case "ver":
+			request.getRequestDispatcher("/DashboardController?ruta=ver").forward(request, response);
+			break;
 		case "nuevoIngreso":
 			nuevoIngreso(request, response);
 			break;
 		case "nuevaTransferencia":
-			nuevoIngreso(request, response);
+			nuevaTransferencia(request, response);
 			break;
 		}
 
 	}
 
-	private void nuevaTransferencia(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void nuevaTransferencia(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 		
 		//1.- Obtengo Datos
-		int idcuentaOrigen = Integer.parseInt(request.getParameter("idCuentaOrigen"));
+		int idCuentaOrigen = Integer.parseInt(request.getParameter("idCuentaOrigen"));
 		//2.- Llamar al modelo
-		Cuenta cuentaOrigen = Cuenta.getById(Integer.parseInt("idCuenta"));
-		List<Cuenta> cuentasDestino = Cuenta.getAllDestinos("idCuentaOrigen");
+		Cuenta cuentaOrigen = Cuenta.getById(idCuentaOrigen);
+		List<Cuenta> cuentasDestino = Cuenta.getAllDestinos(idCuentaOrigen);
 		Categoria categoriaTransferencia = new Categoria();
-		Categoria categoria = categoriaTransferencia.getAllOfTransferType();
+		Categoria categoria = Categoria.getAllOfTransferType();
 		//3.- Llamar a la vista
 		request.setAttribute("cuentaOrigen", cuentaOrigen);
 		request.setAttribute("cuentasDestino", cuentasDestino);
@@ -98,20 +102,15 @@ public class RegistrarMovimientosController extends HttpServlet {
 
 	private void guardarTransferencia(HttpServletRequest request, HttpServletResponse response) throws ParseException {
 		// TODO Auto-generated method stub
-	/*	
+		
 		//1.- Obtener Datos
 		String concepto = request.getParameter("concepto");
-		
 		String fechaExtraida = request.getParameter("fecha");
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = dateFormat.parse(fechaExtraida);
-        
         Double valor = Double.parseDouble(request.getParameter("valor"));
-        
         int idCuentaOrigen = Integer.parseInt(request.getParameter("idCuentaOrigen"));
-        
         int idCuentaDestino = Integer.parseInt(request.getParameter("idCuentaDestino"));
-        
         int idCategoria = Integer.parseInt(request.getParameter("idCategoria"));
         
         //2. Llamar al modelo
@@ -124,7 +123,7 @@ public class RegistrarMovimientosController extends HttpServlet {
         
      // 3.- llamo a la vista
         request.getRequestDispatcher("/DashboardController?ruta=ver").forward(request, response);
-*/
+
         
 	}
 

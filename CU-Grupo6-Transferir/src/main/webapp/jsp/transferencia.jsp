@@ -8,8 +8,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/styleTransferencia.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/styleTransferencia.css">
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 </head>
 
@@ -35,7 +35,7 @@
         <main class="main_pagina_principal">
             <div class="contenedor_default dash_head " style="margin-bottom: 0px">
                 <header class="header_contenedor">
-                    <h3>${cuenta.nombre}</h3>
+                    <h3>${cuentaOrigen.nombre}</h3>
                     <button class="boton boton2 color_inactivo_boton">
                         <iconify-icon class="icono" icon="carbon:view-filled" width="18"></iconify-icon>
                     </button>
@@ -43,7 +43,7 @@
                 <main class="balance">
                     <iconify-icon class="icono" icon="cryptocurrency:usd" style="color: white;"
                         width="32"></iconify-icon>
-                    <h1>${cuenta.total}</h1>
+                    <h1>${cuentaOrigen.total}</h1>
                 </main>
             </div>
 
@@ -56,27 +56,27 @@
                 <iconify-icon class="icono" icon="carbon:arrow-up" width="32"></iconify-icon>
                 <iconify-icon class="icono" icon="carbon:arrow-down" width="32"></iconify-icon>
             </div>
+			
+			<div class="contenedor_default dash_head" style="margin-bottom: 0px">
+			    <header class="header_contenedor">
+			        <h3>Cuenta a Transferir</h3>
+			        <div class="botones_remitente">
+			            <button class="boton boton2 color_inactivo_boton">
+			                <iconify-icon class="icono" icon="carbon:view-filled" width="18"></iconify-icon>
+			            </button>
+			            <select name="idCuenta" id="tipoCuenta" class="select-banco-boton">
+			                <c:forEach items="${cuentasDestino}" var="c">
+			                    <option value="${c.id}" data-total="${c.total}">${c.nombre}</option>
+			                </c:forEach>
+			            </select>
+			        </div>
+			    </header>
+			    <main class="balance">
+			        <iconify-icon class="icono" icon="cryptocurrency:usd" style="color: white;" width="32"></iconify-icon>
+			        <h1 id="totalCuenta">${cuentaOrigen.total}</h1>
+			    </main>
+			</div>
 
-            <div class="contenedor_default dash_head" style="margin-bottom: 0px">
-                <header class="header_contenedor">
-                    <h3>Cuenta a Transferir</h3>
-                    <div class="botones_remitente">
-                        <button class="boton boton2 color_inactivo_boton">
-                            <iconify-icon class="icono" icon="carbon:view-filled" width="18"></iconify-icon>
-                        </button>
-                        <select name="idCuenta" id="tipo${cuenta.id}"class="select-banco-boton">                          
-                            <c:forEach items="${cuenta}" var="cuenta">
-	                    		<option value="${cuenta.id}">${cuenta.nombre}</option>
-	                		</c:forEach>
-                        </select>
-                    </div>
-                </header>
-                <main class="balance">
-                    <iconify-icon class="icono" icon="cryptocurrency:usd" style="color: white;"
-                        width="32"></iconify-icon>
-                    <h1>${cuenta.total}</h1>
-                </main>
-            </div>
 
         </main>
 
@@ -84,7 +84,7 @@
             <p class="titulo">Datos Transferencia</p>
             <form class="form-agregar-cuenta" action="RegistrarMovimientosController?ruta=guardartransferencia" method="post">
                 <label for="nombre">Ingresa el monto a transferir </label>
-                <input type="text" name="nombre" class="txt-nombre-banco" placeholder="Monto" pattern="^\d+(\.\d{1,2})?$">
+                <input type="text" name="valor" class="txt-nombre-banco" placeholder="Monto" pattern="^\d+(\.\d{1,2})?$">
                 <label for="concepto">Ingresa el motivo de transferencia </label>
                 <input type="text" name="concepto" class="txt-nombre-banco" placeholder="Motivo de transferencia">
                 <label for="fecha">Ingresa la Fecha </label>
@@ -104,6 +104,22 @@
             </form>
         </div>
     </div>
+    
+    
+	    
+	<script>
+	    
+	    var selectCuenta = document.getElementById("tipoCuenta");
+	    var totalCuenta = document.getElementById("totalCuenta");
+	    
+	    var totalSeleccionado = selectCuenta.options[selectCuenta.selectedIndex].getAttribute("data-total");
+	    totalCuenta.textContent = totalSeleccionado;
+	    
+	    selectCuenta.addEventListener("change", function() {
+	    	var totalSeleccionado = selectCuenta.options[selectCuenta.selectedIndex].getAttribute("data-total");
+	        totalCuenta.textContent = totalSeleccionado;
+	    });
+	</script>
 
 
 </body>
