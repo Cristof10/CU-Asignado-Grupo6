@@ -83,13 +83,13 @@
         <div class="contenedor-transferencia">
             <p class="titulo">Datos Transferencia</p>
             <form class="form-agregar-cuenta" action="RegistrarMovimientosController?ruta=guardartransferencia" method="post">
-                <label for="nombre">Ingresa el monto a transferir </label>
+                <label for="valor">Ingresa el monto a transferir </label>
                 <input type="text" name="valor" class="txt-nombre-banco" placeholder="Monto" pattern="^\d+(\.\d{1,2})?$">
                 <label for="concepto">Ingresa el motivo de transferencia </label>
                 <input type="text" name="concepto" class="txt-nombre-banco" placeholder="Motivo de transferencia">
                 <label for="fecha">Ingresa la Fecha </label>
                 <input type="date" name="fecha" class="fecha-transferencia" placeholder="Fecha de transferencia">
-                <label for="tipo">Selecciona categoria de la Cuenta</label>
+                <label for="idCategoria">Selecciona categoria de la Cuenta</label>
                 
                 <select name="idCategoria" id="tipo" class="select-categoria">
                     <c:forEach items="${categorias}" var="categoria">

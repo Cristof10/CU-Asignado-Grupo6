@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import entities.Categoria;
 import entities.Cuenta;
 import entities.Movimiento;
+import entities.TipoMovimiento;
 
 import java.util.Date;
 
@@ -50,6 +51,13 @@ public class RegistrarMovimientosController extends HttpServlet {
 		case "nuevaTransferencia":
 			nuevaTransferencia(request, response);
 			break;
+		case "guardarTransferencia":
+			try {
+				guardarTransferencia(request, response);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -63,11 +71,11 @@ public class RegistrarMovimientosController extends HttpServlet {
 		Cuenta cuentaOrigen = Cuenta.getById(idCuentaOrigen);
 		List<Cuenta> cuentasDestino = Cuenta.getAllDestinos(idCuentaOrigen);
 		Categoria categoriaTransferencia = new Categoria();
-		Categoria categoria = Categoria.getAllOfTransferType();
+		List<Categoria> categoriasTransferencia = Categoria.getAllOfTransferType();
 		//3.- Llamar a la vista
 		request.setAttribute("cuentaOrigen", cuentaOrigen);
 		request.setAttribute("cuentasDestino", cuentasDestino);
-		request.setAttribute("categoria", categoria);
+		request.setAttribute("categorias", categoriasTransferencia);
 		request.getRequestDispatcher("/jsp/transferencia.jsp").forward(request, response);
 		
 	}
@@ -100,14 +108,15 @@ public class RegistrarMovimientosController extends HttpServlet {
 
 	}
 
-	private void guardarTransferencia(HttpServletRequest request, HttpServletResponse response) throws ParseException {
+	private void guardarTransferencia(HttpServletRequest request, HttpServletResponse response) throws ParseException, ServletException, IOException {
 		// TODO Auto-generated method stub
 		
 		//1.- Obtener Datos
 		String concepto = request.getParameter("concepto");
 		String fechaExtraida = request.getParameter("fecha");
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date fecha = dateFormat.parse(fechaExtraida);
+		SimpleDateFormat dateFormatEntrada = new SimpleDateFormat("dd/MM/yyyy");
+	    SimpleDateFormat dateFormatSalida = new SimpleDateFormat("yyyy-MM-dd");
+	    Date fecha = dateFormatSalida.parse(dateFormatSalida.format(dateFormatEntrada.parse(fechaExtraida)));
         Double valor = Double.parseDouble(request.getParameter("valor"));
         int idCuentaOrigen = Integer.parseInt(request.getParameter("idCuentaOrigen"));
         int idCuentaDestino = Integer.parseInt(request.getParameter("idCuentaDestino"));
@@ -118,8 +127,12 @@ public class RegistrarMovimientosController extends HttpServlet {
         Cuenta cuentaOrigen = Cuenta.getById(idCuentaOrigen);
         Cuenta cuentaDestino = Cuenta.getById(idCuentaDestino);
         Categoria categoria = Categoria.getById(idCategoria);
-        Movimiento movTransferencia = new Movimiento();//Por revisar metodo
-        boolean movimiento = movTransferencia.createTransferencia(movTransferencia, movTransferencia);
+       
+        
+        Movimiento egreso = new Movimiento(fecha, valor, concepto, TipoMovimiento.EGRESO, cuentaOrigen, null, categoria);
+        Movimiento ingreso = new Movimiento(fecha, valor, concepto, TipoMovimiento.INGRESO, null, cuentaDestino, categoria);
+        boolean movimiento = Movimiento.createTransferencia(ingreso, egreso);
+        
         
      // 3.- llamo a la vista
         request.getRequestDispatcher("/DashboardController?ruta=ver").forward(request, response);

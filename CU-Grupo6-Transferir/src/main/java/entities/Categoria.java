@@ -138,7 +138,7 @@ public class Categoria implements Serializable {
     }
 
     /**
-     * @param fecha  
+     * @param fecha  	
      * @return
      */
     public static List<Categoria> getSumarizedByDate(int mes ) {
@@ -146,13 +146,13 @@ public class Categoria implements Serializable {
         return null;
     }
     
-    public static Categoria getAllOfTransferType(){
+    @SuppressWarnings("unchecked")
+	public static List<Categoria> getAllOfTransferType(){
     	EntityManager em = Persistence.createEntityManagerFactory("persistencia").createEntityManager();
-    	String consulta = "SELECT t FROM Categoria t WHERE t.tipo = :transferencia";
-    	Query query = em.createQuery(consulta);
-    	query.setParameter("transferencia", TipoMovimiento.TRANSFERENCIA);
-    	
-    	return (Categoria)query.getSingleResult();
+        String consulta = "SELECT t FROM Categoria t";
+        Query query = em.createQuery(consulta);
+        
+        return (List<Categoria>) query.getResultList();
     }
 
 }
