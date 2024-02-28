@@ -147,12 +147,13 @@ public class Categoria implements Serializable {
     }
     
     @SuppressWarnings("unchecked")
-	public static List<Categoria> getAllOfTransferType(){
+	public static Categoria getAllOfTransferType(){
     	EntityManager em = Persistence.createEntityManagerFactory("persistencia").createEntityManager();
-        String consulta = "SELECT t FROM Categoria t";
-        Query query = em.createQuery(consulta);
+    	String consulta = "SELECT t FROM Categoria t WHERE t.tipo = :transferencia";
+    	Query query = em.createQuery(consulta);
+    	query.setParameter("transferencia", TipoMovimiento.TRANSFERENCIA);
         
-        return (List<Categoria>) query.getResultList();
-    }
+        return (Categoria) query.getSingleResult(); 
+        		}
 
 }

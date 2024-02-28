@@ -71,7 +71,7 @@ public class RegistrarMovimientosController extends HttpServlet {
 		Cuenta cuentaOrigen = Cuenta.getById(idCuentaOrigen);
 		List<Cuenta> cuentasDestino = Cuenta.getAllDestinos(idCuentaOrigen);
 		Categoria categoriaTransferencia = new Categoria();
-		List<Categoria> categoriasTransferencia = Categoria.getAllOfTransferType();
+		Categoria categoriasTransferencia = Categoria.getAllOfTransferType();
 		//3.- Llamar a la vista
 		request.setAttribute("cuentaOrigen", cuentaOrigen);
 		request.setAttribute("cuentasDestino", cuentasDestino);
