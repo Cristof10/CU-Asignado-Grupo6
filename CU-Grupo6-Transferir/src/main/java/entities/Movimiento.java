@@ -173,44 +173,46 @@ public class Movimiento implements Serializable {
     
     public static boolean createTransferencia(Movimiento ingreso, Movimiento egreso) {
         // Realiza la transferencia de fondos
-        boolean ingresoExitoso = ingreso.executeIngreso();
-        boolean egresoExitoso = egreso.executeEgreso();
-        createIngreso(ingreso);
-        createGasto(egreso);
-        return ingresoExitoso && egresoExitoso; // Retorna true si ambas operaciones fueron exitosas
+        boolean egresoExitoso = egreso.executeEgreso(egreso); // Ejecutar la operación de egreso (restar de la cuenta origen)
+        if (egresoExitoso) {
+            boolean ingresoExitoso = ingreso.executeIngreso(ingreso); // Ejecutar la operación de ingreso (sumar a la cuenta destino)
+            if (!ingresoExitoso) {
+                // Si la operación de ingreso no fue exitosa, revertir la operación de egreso
+                egreso.revertEgreso();
+            }
+            return ingresoExitoso; // Retorna true si el ingreso fue exitoso
+        } else {
+            return false; // Retorna false si el egreso no fue exitoso
+        }
     }
-    public boolean executeEgreso() {
+
+    public boolean executeEgreso(Movimiento egreso) {
         // Verifica que la cuenta de origen tenga suficientes fondos
         if (origen != null && origen.getTotal() >= monto) {
             // Resta el monto de la cuenta de origen
             origen.setTotal(origen.getTotal() - monto);
-            // Actualiza la cuenta de origen en la base de datos (si es necesario)
-            EntityManager em = Persistence.createEntityManagerFactory("persistencia").createEntityManager();
-            em.getTransaction().begin();
-            em.merge(origen);
-            em.getTransaction().commit();
-            em.close();
-            return true; // La operación de egreso se realizó con éxito
+            // guardar gasto 
+            createGasto(egreso);
+            // Persiste los cambios en la cuenta de origen
+            return origen.persist();
         } else {
             return false; // No hay suficientes fondos en la cuenta de origen
         }
     }
 
-    public boolean executeIngreso() {
+    public boolean executeIngreso(Movimiento ingreso) {
         // Añade el monto a la cuenta de destino
         if (destino != null) {
             destino.setTotal(destino.getTotal() + monto);
-            // Actualiza la cuenta de destino en la base de datos (si es necesario)
-            EntityManager em = Persistence.createEntityManagerFactory("persistencia").createEntityManager();
-            em.getTransaction().begin();
-            em.merge(destino);
-            em.getTransaction().commit();
-            em.close();
-            return true; // La operación de ingreso se realizó con éxito
+            // guardar ingreso
+            createGasto(ingreso);
+            // Persiste los cambios en la cuenta de destino
+            return destino.persist();
         } else {
             return false; // La cuenta de destino es inválida
         }
     }
+
 
     public void revertEgreso() {
         // Añade el monto de vuelta a la cuenta de origen

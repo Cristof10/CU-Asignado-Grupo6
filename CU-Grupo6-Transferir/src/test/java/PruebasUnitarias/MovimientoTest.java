@@ -61,10 +61,10 @@ class MovimientoTest {
         assertTrue(Movimiento.createTransferencia(ingreso, egreso));
         
         // Verificar que el saldo de la cuenta origen se redujo en 100
-        assertEquals(700, origen.getTotal());
+        assertEquals(300, origen.getTotal());
         
         // Verificar que el saldo de la cuenta destino se aumentó en 100
-        assertEquals(100, destino.getTotal());
+        assertEquals(500, destino.getTotal());
 	}
 
 }

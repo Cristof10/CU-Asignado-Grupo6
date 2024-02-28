@@ -6,6 +6,7 @@ import java.util.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -124,10 +125,26 @@ public class Cuenta implements Serializable {
 		
 	}
 
-	/**
-	 * @param cuenta
-	 * @return
-	 */
+	public boolean persist() {
+        EntityManager em = Persistence.createEntityManagerFactory("persistencia").createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        
+        try {
+            transaction.begin();
+            em.merge(this); // Actualiza la entidad actual en la base de datos
+            transaction.commit();
+            return true; // La operación de persistencia fue exitosa
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback(); // Si hay un error, se hace rollback de la transacción
+            }
+            e.printStackTrace();
+            return false; // La operación de persistencia falló
+        } finally {
+            em.close(); // Se cierra el EntityManager
+        }
+    }
+	
 	public boolean update(Cuenta cuenta) {
 		// TODO implement here
 		return false;
