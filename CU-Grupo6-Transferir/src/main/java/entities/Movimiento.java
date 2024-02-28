@@ -6,6 +6,7 @@ import java.util.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,10 +35,9 @@ public class Movimiento implements Serializable {
 	}
 	
 
-	public Movimiento(Integer id, Date fecha, double monto, String concepto, TipoMovimiento tipo, Cuenta origen,
+	public Movimiento(Date fecha, double monto, String concepto, TipoMovimiento tipo, Cuenta origen,
 			Cuenta destino, Categoria categoria) {
 		super();
-		this.id = id;
 		this.fecha = fecha;
 		this.monto = monto;
 		this.concepto = concepto;
@@ -78,8 +78,6 @@ public class Movimiento implements Serializable {
 	@JoinColumn(referencedColumnName = "id")
 	private Categoria categoria;
 	
-
-
 
 	public Integer getId() {
 		return id;
@@ -145,44 +143,93 @@ public class Movimiento implements Serializable {
 		this.categoria = categoria;
 	}
 
-	/**
-	 * @param ingreso
-	 * @return
-	 */
-	public static void createIngreso(Movimiento ingreso) {
-		
+	private static boolean persistMovimiento(Movimiento movimiento) {
+        EntityManager em = Persistence.createEntityManagerFactory("persistencia").createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        
+        try {
+            transaction.begin();
+            em.persist(movimiento); // Persiste el objeto movimiento en la base de datos
+            transaction.commit();
+            return true; // Indica que la operación se completó correctamente
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback(); // Si ocurre un error, hace rollback de la transacción
+            }
+            e.printStackTrace();
+            return false; // Indica que la operación no se completó correctamente
+        } finally {
+            em.close(); // Cierra el EntityManager
+        }
+    }
 
-	}
+    public static boolean createIngreso(Movimiento ingreso) {
+        return persistMovimiento(ingreso);
+    }
 
-	/**
-	 * @param gasto
-	 * @return
-	 */
-	public boolean createGasto(Movimiento gasto) {
-		// TODO implement here
-		return false;
-	}
+    public static boolean createGasto(Movimiento gasto) {
+        return persistMovimiento(gasto);
+    }
+    
+    public static boolean createTransferencia(Movimiento ingreso, Movimiento egreso) {
+        // Realiza la transferencia de fondos
+        boolean ingresoExitoso = ingreso.executeIngreso();
+        boolean egresoExitoso = egreso.executeEgreso();
+        createIngreso(ingreso);
+        createGasto(egreso);
+        return ingresoExitoso && egresoExitoso; // Retorna true si ambas operaciones fueron exitosas
+    }
+    public boolean executeEgreso() {
+        // Verifica que la cuenta de origen tenga suficientes fondos
+        if (origen != null && origen.getTotal() >= monto) {
+            // Resta el monto de la cuenta de origen
+            origen.setTotal(origen.getTotal() - monto);
+            // Actualiza la cuenta de origen en la base de datos (si es necesario)
+            EntityManager em = Persistence.createEntityManagerFactory("persistencia").createEntityManager();
+            em.getTransaction().begin();
+            em.merge(origen);
+            em.getTransaction().commit();
+            em.close();
+            return true; // La operación de egreso se realizó con éxito
+        } else {
+            return false; // No hay suficientes fondos en la cuenta de origen
+        }
+    }
 
-	/**
-	 * @param ingreso
-	 * @param egreso
-	 */
-	public void createTransferencia(Movimiento ingreso, Movimiento egreso) {
-		// TODO implement here
-	}
+    public boolean executeIngreso() {
+        // Añade el monto a la cuenta de destino
+        if (destino != null) {
+            destino.setTotal(destino.getTotal() + monto);
+            // Actualiza la cuenta de destino en la base de datos (si es necesario)
+            EntityManager em = Persistence.createEntityManagerFactory("persistencia").createEntityManager();
+            em.getTransaction().begin();
+            em.merge(destino);
+            em.getTransaction().commit();
+            em.close();
+            return true; // La operación de ingreso se realizó con éxito
+        } else {
+            return false; // La cuenta de destino es inválida
+        }
+    }
 
-	/**
-	 * @param id
-	 * @param fecha
-	 * @param monto
-	 * @param concepto
-	 * @return
-	 */
+    public void revertEgreso() {
+        // Añade el monto de vuelta a la cuenta de origen
+        if (origen != null) {
+            origen.setTotal(origen.getTotal() + monto);
+            // Actualiza la cuenta de origen en la base de datos (si es necesario)
+            EntityManager em = Persistence.createEntityManagerFactory("persistencia").createEntityManager();
+            em.getTransaction().begin();
+            em.merge(origen);
+            em.getTransaction().commit();
+            em.close();
+        }
+    }
+
+
 	public boolean update(int id, Date fecha, double monto, String concepto) {
 		// TODO implement here
 		return false;
 	}
-
 
 	public boolean delete(int id) {
 		// TODO implement here
