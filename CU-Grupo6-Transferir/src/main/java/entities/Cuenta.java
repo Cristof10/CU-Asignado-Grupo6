@@ -146,7 +146,7 @@ public class Cuenta implements Serializable {
         }
     }
 	
-	public boolean update(Cuenta cuenta) {
+	public static boolean update(Cuenta cuenta) {
 		// TODO implement here
 		return false;
 	}

@@ -26,7 +26,7 @@
             </a>
             <a href="configuracion.html">
                 <iconify-icon class="icono" icon="carbon:view-filled" width="18"></iconify-icon>
-                <span>ConfiguraciÃ³n</span>
+                <span>Configuración</span>
             </a>
         </div>
     </header>
@@ -82,26 +82,24 @@
 
         <div class="contenedor-transferencia">
             <p class="titulo">Datos Transferencia</p>
-            <form class="form-agregar-cuenta" action="RegistrarMovimientosController?ruta=guardartransferencia" method="post">
-                <label for="valor">Ingresa el monto a transferir </label>
-                <input type="text" name="valor" class="txt-nombre-banco" placeholder="Monto" pattern="^\d+(\.\d{1,2})?$">
-                <label for="concepto">Ingresa el motivo de transferencia </label>
-                <input type="text" name="concepto" class="txt-nombre-banco" placeholder="Motivo de transferencia">
-                <label for="fecha">Ingresa la Fecha </label>
-                <input type="date" name="fecha" class="fecha-transferencia" placeholder="Fecha de transferencia">
-                <label for="idCategoria">Selecciona categoria de la Cuenta</label>
-                
-                <select name="idCategoria" id="tipo" class="select-categoria">
-                    <c:forEach items="${categorias}" var="categoria">
-	                    <option value="${categoria.id}">${categoria.nombre}</option>
-	                </c:forEach>
-                </select>
-                
-                <div class="btn-confirmacion">
-                    <button class="boton boton1">Transferir</button>
-                    <button class="boton boton-cancelar">Cancelar</button>
-                </div>
-            </form>
+            <form class="form-agregar-cuenta" action="RegistrarMovimientosController?ruta=guardarTransferencia" method="post">
+			    <input type="hidden" name="idCuentaOrigen" value="${cuentaOrigen.id}">
+			   	<input type="hidden" name="idCuentasDestino" value="${cuentasDestino.id}">
+			    <label for="valor">Ingresa el monto a transferir </label>
+			    <input type="text" name="valor" class="txt-nombre-banco" placeholder="Monto" pattern="^\d+(\.\d{1,2})?$">
+			    <label for="concepto">Ingresa el motivo de transferencia </label>
+			    <input type="text" name="concepto" class="txt-nombre-banco" placeholder="Motivo de transferencia">
+			    <label for="fecha">Ingresa la Fecha </label>
+			    <input type="date" name="fecha" class="fecha-transferencia" placeholder="Fecha de transferencia">
+			    <label for="idCategoria">Selecciona categoria de la Cuenta</label>
+			    <select name="idCategoria" id="tipo" class="select-categoria">
+			        <option value="${categorias.id}">${categorias.nombre}</option>
+			    </select>
+			    <div class="btn-confirmacion">
+			        <button type="submit" class="boton boton1">Transferir</button>
+			        <button class="boton boton-cancelar">Cancelar</button>
+			    </div>
+			</form>
         </div>
     </div>
     
