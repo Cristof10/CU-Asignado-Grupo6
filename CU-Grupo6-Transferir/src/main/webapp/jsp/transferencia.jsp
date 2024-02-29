@@ -20,7 +20,7 @@
             <p>Usuario</p>
         </button>
         <div>
-            <a href="dashboard.html">
+            <a href="DashboardController">
                 <iconify-icon class="icono" icon="carbon:view-filled" width="18"></iconify-icon>
                 <span>Dashboard</span>
             </a>
