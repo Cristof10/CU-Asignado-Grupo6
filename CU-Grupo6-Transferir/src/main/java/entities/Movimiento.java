@@ -163,17 +163,9 @@ public class Movimiento implements Serializable {
         }
     }
 
-    public static boolean createIngreso(Movimiento ingreso) {
-        return persistMovimiento(ingreso);
-    }
-
-    public static boolean createGasto(Movimiento gasto) {
-        return persistMovimiento(gasto);
-    }
-    
     public static boolean createTransferencia(Movimiento ingreso, Movimiento egreso) {
     	
-    	/*  ESTAS SON VALIDACIONES, SI TE FUNCA LE DESCOMENTAS Y LE PRUEBAS TAMBIEN CON ESTO XD
+    	// Validaciones
     	if (ingreso.getOrigen().getId() == egreso.getDestino().getId()) {
             return false;
         }
@@ -186,11 +178,11 @@ public class Movimiento implements Serializable {
             return false; 
         }
     	
-    	*/
+    	
     	// Realiza la transferencia de fondos
-        boolean egresoExitoso = egreso.executeEgreso(egreso); // Ejecutar la operación de egreso (restar de la cuenta origen)
+        boolean egresoExitoso = Movimiento.createGasto(egreso); // Ejecutar la operación de egreso (restar de la cuenta origen)
         if (egresoExitoso) {
-            boolean ingresoExitoso = ingreso.executeIngreso(ingreso); // Ejecutar la operación de ingreso (sumar a la cuenta destino)
+            boolean ingresoExitoso = Movimiento.createIngreso(ingreso); // Ejecutar la operación de ingreso (sumar a la cuenta destino)
             if (!ingresoExitoso) {
                 // Si la operación de ingreso no fue exitosa, revertir la operación de egreso
                 egreso.revertEgreso();
@@ -201,28 +193,33 @@ public class Movimiento implements Serializable {
         }
     }
 
-    public boolean executeEgreso(Movimiento egreso) {
+    public static boolean createGasto(Movimiento egreso) {
         // Verifica que la cuenta de origen tenga suficientes fondos
-        if (origen != null && origen.getTotal() >= monto) {
+        if (egreso.origen != null && egreso.origen.getTotal() >= egreso.monto) {
             // Resta el monto de la cuenta de origen
-            origen.setTotal(origen.getTotal() - monto);
+            egreso.origen.setTotal(egreso.origen.getTotal() - egreso.monto);
             // guardar gasto 
-            createGasto(egreso);
+            if(egreso.origen.persist()) {
+            	persistMovimiento(egreso);
+            }
+            
             // Persiste los cambios en la cuenta de origen
-            return origen.persist();
+            return egreso.origen.persist();
         } else {
             return false; // No hay suficientes fondos en la cuenta de origen
         }
     }
 
-    public boolean executeIngreso(Movimiento ingreso) {
+    public static boolean createIngreso(Movimiento ingreso) {
         // Añade el monto a la cuenta de destino
-        if (destino != null) {
-            destino.setTotal(destino.getTotal() + monto);
+        if (ingreso.destino != null) {
+            ingreso.destino.setTotal(ingreso.destino.getTotal() + ingreso.monto);
             // guardar ingreso
-            createGasto(ingreso);
+            if(ingreso.origen.persist()) {
+            	persistMovimiento(ingreso);
+            }
             // Persiste los cambios en la cuenta de destino
-            return destino.persist();
+            return ingreso.destino.persist();
         } else {
             return false; // La cuenta de destino es inválida
         }
