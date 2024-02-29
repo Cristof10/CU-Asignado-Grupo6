@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transferir</title>
+    <title>Document</title>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/styleTransferencia.css">
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
@@ -84,7 +84,9 @@
             <p class="titulo">Datos Transferencia</p>
             <form class="form-agregar-cuenta" action="RegistrarMovimientosController?ruta=guardarTransferencia" method="post">
 			    <input type="hidden" name="idCuentaOrigen" value="${cuentaOrigen.id}">
-			   	<input type="hidden" name="idCuentasDestino" value="${cuentasDestino.id}">
+			    <c:forEach items="${cuentasDestino}" var="c">
+    				<input type="hidden" name="idCuentasDestino" value="${c.id}">
+				</c:forEach>
 			    <label for="valor">Ingresa el monto a transferir </label>
 			    <input type="text" name="valor" class="txt-nombre-banco" placeholder="Monto" pattern="^\d+(\.\d{1,2})?$">
 			    <label for="concepto">Ingresa el motivo de transferencia </label>

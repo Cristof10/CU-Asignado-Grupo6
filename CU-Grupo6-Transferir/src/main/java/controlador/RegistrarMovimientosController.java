@@ -121,6 +121,7 @@ public class RegistrarMovimientosController extends HttpServlet {
         int idCuentaDestino = Integer.parseInt(request.getParameter("idCuentaDestino"));
         int idCategoria = Integer.parseInt(request.getParameter("idCategoria"));
 		*/
+		
 		SimpleDateFormat dateFormatEntrada = new SimpleDateFormat("dd-MM-yyyy");
 	    SimpleDateFormat dateFormatSalida = new SimpleDateFormat("yyyy-MM-dd");
 	    String fechaExtraida = request.getParameter("fecha");
@@ -128,7 +129,7 @@ public class RegistrarMovimientosController extends HttpServlet {
 	    String concepto = request.getParameter("concepto");
 	    double valor = Double.parseDouble(request.getParameter("valor"));
         int idCuentaOrigen = Integer.parseInt(request.getParameter("idCuentaOrigen"));
-        int idCuentasDestino = Integer.parseInt(request.getParameter("idCuentasDestino"));
+        int idCuentaDestino = Integer.parseInt(request.getParameter("idCuentasDestino"));
         int idCategoria = Integer.parseInt(request.getParameter("idCategoria"));
         
         //2. Llamar al modelo
@@ -142,7 +143,7 @@ public class RegistrarMovimientosController extends HttpServlet {
         
         Categoria categoria = Categoria.getById(idCategoria);
         Cuenta cuentaOrigen = Cuenta.getById(idCuentaOrigen);
-        Cuenta cuentaDestino = Cuenta.getById(idCuentasDestino);
+        Cuenta cuentaDestino = Cuenta.getById(idCuentaDestino);
         Movimiento ingreso = new Movimiento(fecha, valor, concepto, TipoMovimiento.INGRESO, cuentaDestino, null, categoria);
         Movimiento egreso = new Movimiento(fecha, valor, concepto, TipoMovimiento.EGRESO, cuentaOrigen, null, categoria);
         boolean movimiento = Movimiento.createTransferencia(ingreso, egreso);
