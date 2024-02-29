@@ -39,8 +39,6 @@ label{
 }
 
 
-
-
 .color-texto {
   color: var(--color-texto);
 }
@@ -225,17 +223,17 @@ label{
   padding: 5px 10px;
   border-radius: 15px;
 }
-
 .transaccion {
-  /* Estilos de tu clase .transaccion */
   display: grid;
-  grid-template-columns: 200px 200px 200px 200px 200px 200px;
+  /*grid de 5 columnas*/
+  grid-template-columns: 0.25fr 0.5fr 1fr 1fr 1fr 1fr;
   align-items: center;
+  /*alinear horizontalmente en el centro cada grid*/
   justify-items: center;
   background-color: var(--color-boton-2);
-  border-radius: 15px;
+  border-radius: 30px;
+  margin: 2rem 0 0 0;
 }
-
 
 /*
 .transaccion:last-child {
@@ -279,7 +277,6 @@ label{
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  width: 200px;
 }
 
 .dash_head {
@@ -297,14 +294,7 @@ label{
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 200px;
-}
 
-.transaccion .transaccion_info{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100px;
 }
 
 .transaccion_responsive {

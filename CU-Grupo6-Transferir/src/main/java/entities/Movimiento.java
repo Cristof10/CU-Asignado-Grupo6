@@ -207,6 +207,7 @@ public class Movimiento implements Serializable {
             	persistMovimiento(egreso);
             }
             
+            
             // Persiste los cambios en la cuenta de origen
             return egreso.origen.persist();
         } else {
