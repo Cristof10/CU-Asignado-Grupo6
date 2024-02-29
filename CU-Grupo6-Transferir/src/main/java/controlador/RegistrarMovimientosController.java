@@ -122,13 +122,14 @@ public class RegistrarMovimientosController extends HttpServlet {
         int idCategoria = Integer.parseInt(request.getParameter("idCategoria"));
 		*/
 		
-		SimpleDateFormat dateFormatEntrada = new SimpleDateFormat("dd-MM-yyyy");
-	    SimpleDateFormat dateFormatSalida = new SimpleDateFormat("yyyy-MM-dd");
-	    String fechaExtraida = request.getParameter("fecha");
-	    Date fecha = dateFormatSalida.parse(dateFormatSalida.format(dateFormatEntrada.parse(fechaExtraida)));
+		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        Date fecha = formato.parse(request.getParameter("fecha"));
 	    String concepto = request.getParameter("concepto");
 	    double valor = Double.parseDouble(request.getParameter("valor"));
         int idCuentaOrigen = Integer.parseInt(request.getParameter("idCuentaOrigen"));
+        
+        //String idCuentasDestinoValue = request.getParameter("idCuentasDestino_0");
+        //int idCuentaDestino = Integer.parseInt(idCuentasDestinoValue);
         int idCuentaDestino = Integer.parseInt(request.getParameter("idCuentasDestino"));
         int idCategoria = Integer.parseInt(request.getParameter("idCategoria"));
         
@@ -150,7 +151,8 @@ public class RegistrarMovimientosController extends HttpServlet {
         
         
      // 3.- llamo a la vista
-        request.getRequestDispatcher("/DashboardController?ruta=ver").forward(request, response);
+        //request.getRequestDispatcher("/DashboardController?ruta=ver").forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/DashboardController?ruta=ver");
 
         
 	}

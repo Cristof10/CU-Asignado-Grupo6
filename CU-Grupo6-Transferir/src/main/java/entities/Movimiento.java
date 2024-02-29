@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import excepciones.OrigenIgualDestinoException;
+
 /**
  * @author Carlos Iñiguez
  */
@@ -164,6 +166,9 @@ public class Movimiento implements Serializable {
     }
 
     public static boolean createTransferencia(Movimiento ingreso, Movimiento egreso) {
+    	
+    	
+
     	
     	
     	

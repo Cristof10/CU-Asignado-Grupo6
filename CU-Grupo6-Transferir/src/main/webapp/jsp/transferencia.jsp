@@ -84,9 +84,7 @@
             <p class="titulo">Datos Transferencia</p>
             <form class="form-agregar-cuenta" action="RegistrarMovimientosController?ruta=guardarTransferencia" method="post">
 			    <input type="hidden" name="idCuentaOrigen" value="${cuentaOrigen.id}">
-			    <c:forEach items="${cuentasDestino}" var="c">
-    				<input type="hidden" name="idCuentasDestino" value="${c.id}">
-				</c:forEach>
+			    <input type="hidden" name="idCuentasDestino" id="idCuentasDestino" value="${cuentasDestino[0].id}">
 			    <label for="valor">Ingresa el monto a transferir </label>
 			    <input type="text" name="valor" class="txt-nombre-banco" placeholder="Monto" pattern="^\d+(\.\d{1,2})?$">
 			    <label for="concepto">Ingresa el motivo de transferencia </label>
@@ -120,6 +118,24 @@
 	        totalCuenta.textContent = totalSeleccionado;
 	    });
 	    
+	    
+	    // Función para actualizar el valor de idCuentasDestino
+	    function actualizarIdCuentasDestino() {
+	        var selectCuenta = document.getElementById("tipoCuenta");
+	        var idCuentasDestinoInput = document.querySelector('input[name="idCuentasDestino"]');
+	        
+	        // Obtener el valor seleccionado en el select
+	        var valorSeleccionado = selectCuenta.value;
+	        
+	        // Actualizar el valor del input idCuentasDestino
+	        idCuentasDestinoInput.value = valorSeleccionado;
+	    }
+	    
+	    // Llamar a la función cuando cambie la selección en el select
+	    document.getElementById("tipoCuenta").addEventListener("change", actualizarIdCuentasDestino);
+	    
+	    // Llamar a la función al cargar la página para asegurar que el valor esté actualizado
+	    window.addEventListener("load", actualizarIdCuentasDestino);
 	    
 	</script>
 
