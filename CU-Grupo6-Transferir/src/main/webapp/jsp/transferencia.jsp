@@ -97,7 +97,7 @@
 			    </select>
 			    <div class="btn-confirmacion">
 			        <button type="submit" class="boton boton1">Transferir</button>
-			        <button class="boton boton-cancelar">Cancelar</button>
+			        <button type="button" onclick="cancelar()" class="boton boton-cancelar">Cancelar</button>
 			    </div>
 			</form>
         </div>
@@ -136,6 +136,11 @@
 	    
 	    // Llamar a la función al cargar la página para asegurar que el valor esté actualizado
 	    window.addEventListener("load", actualizarIdCuentasDestino);
+	    
+	    function cancelar() {
+	        // Redirige al usuario al dashboard
+	        window.location.href = 'DashboardController?ruta=ver';
+	    }
 	    
 	</script>
 

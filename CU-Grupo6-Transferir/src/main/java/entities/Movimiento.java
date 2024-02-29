@@ -19,7 +19,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import excepciones.OrigenIgualDestinoException;
 
 /**
  * @author Carlos Iñiguez
@@ -167,9 +166,21 @@ public class Movimiento implements Serializable {
 
     public static boolean createTransferencia(Movimiento ingreso, Movimiento egreso) {
     	
+    	// Validaciones
+    	if (ingreso.getDestino().getId() == egreso.getOrigen().getId()) {
+    		System.out.println("Operación no válida: La cuenta de origen es igual a la de destino");            
+    		return false;
+        }
     	
-
+    	if (ingreso.getMonto() <= 0) {
+    		System.out.println("Operación no válida: El monto debe ser mayor a cero"); 
+            return false; 
+        }
     	
+    	if (egreso.getMonto() > egreso.getOrigen().getTotal()) {
+    		System.out.println("Operación no válida: Monto insuficiente"); 
+            return false; 
+        }
     	
     	
     	// Realiza la transferencia de fondos
