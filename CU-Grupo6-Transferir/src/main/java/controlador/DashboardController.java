@@ -93,6 +93,8 @@ public class DashboardController extends HttpServlet {
 		request.setAttribute("movimientos", movimientos);
 		request.setAttribute("categorias", categorias);
 		request.getRequestDispatcher("/jsp/dashboard.jsp").forward(request, response);
+		
+		System.out.println("Lista de movimientos: " + movimientos);
 	}
 
 	/**

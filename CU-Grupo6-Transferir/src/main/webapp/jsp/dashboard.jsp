@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -123,234 +124,54 @@
 
 				</main>
 			</div>
+<div class="contenedor_default grid_abajo">
+    <header class="header_contenedor">
+        <h3>Transacciones</h3>
+    </header>
 
-			<!-- TRANSACCIONES RECIENTES -->
-			<div class="contenedor_default grid_abajo">
+    <main id="transacciones" class="mostrar">
+        <c:forEach items="${movimientos}" var="movimiento">
+            <div class="transaccion">
+                <div class="cuenta">
+                    <div class="cuenta_icono">
+                        <!-- Aquí puedes ajustar el icono según la cuenta de origen -->
+                        <iconify-icon class="icono" icon="mdi:bank" width="20"></iconify-icon>
+                    </div>
+                    <div class="cuenta_info">
+                        <p>Cuenta Origen: ${movimiento.origen.nombre}</p>
+                    </div>
+                </div>
 
-				<header class="header_contenedor">
-					<h3>Transacciones Recientes</h3>
-				</header>
+                <div class="cuenta">
+                    <div class="cuenta_icono">
+                        <!-- Aquí puedes ajustar el icono según la cuenta de destino -->
+                        <iconify-icon class="icono" icon="mdi:bank" width="20"></iconify-icon>
+                    </div>
+                    <div class="cuenta_info">
+                        <p>Cuenta Destino: ${movimiento.destino.nombre}</p>
+                    </div>
+                </div>
 
-				<main id="transacciones" class="mostrar">
-					<div class="transaccion">
-						<div class="transaccion_icono">
-							<iconify-icon class="icono deposito_color"
-								icon="ph:arrow-down-bold" width="18"></iconify-icon>
-						</div>
-						<div class="id_transaccion">1</div>
-						<div class="transaccion_info">
-							<p>10/10/2020</p>
-						</div>
+                <div class="concepto">
+                    <p>Concepto: ${movimiento.concepto}</p>
+                </div>
 
-						<div class="cuenta">
-							<div class="cuenta_icono">
-								<iconify-icon class="icono" icon="mdi:bank" width="20"></iconify-icon>
-							</div>
-							<div class="cuenta_info">
-								<p>Pichincha</p>
-							</div>
-						</div>
+                <div class="transaccion_monto">
+                    <h4>Monto: ${movimiento.monto}</h4>
+                </div>
+                
+                <div class="tipo_transaccion">
+                    <h4>Tipo: ${movimiento.tipo}</h4>
+                </div>
 
-						<div class="concepto">
-							<p>Pago de nÃ³mina de mi trabajo</p>
-						</div>
-
-						<div class="transaccion_monto">
-							<h4>1000.00</h4>
-						</div>
-					</div>
-
-					<div class="transaccion">
-						<div class="transaccion_icono">
-							<iconify-icon class="icono retiro_color" icon="ph:arrow-up-bold"
-								width="18"></iconify-icon>
-						</div>
-						<div class="id_transaccion">2</div>
-						<div class="transaccion_info">
-							<p>10/10/2020</p>
-						</div>
-
-						<div class="cuenta">
-							<div class="cuenta_icono">
-								<iconify-icon class="icono" icon="mdi:wallet" width="20"></iconify-icon>
-							</div>
-							<div class="cuenta_info">
-								<p>Efectivo</p>
-							</div>
-						</div>
-
-						<div class="concepto">
-							<p>Libro "Contabilidad bÃ¡sica"</p>
-						</div>
-
-						<div class="transaccion_monto">
-							<h4>-1000.00</h4>
-						</div>
-					</div>
-
-
-					<!--Responsive-->
-					<div class="transaccion_responsive">
-						<div class="boton boton1">
-							<p class="id_transaccion">ID: 001</p>
-						</div>
-
-						<div class="transaccion_info">
-							<h4>Tipo transaccion:</h4>
-							<div>
-								<div class="transaccion_icono">
-									<iconify-icon class="icono deposito_color"
-										icon="ph:arrow-down-bold" width="18"></iconify-icon>
-								</div>
-								<p>Deposito</p>
-							</div>
-						</div>
-
-						<div class="transaccion_fecha">
-							<h4>Fecha:</h4>
-							<p>10/10/2020</p>
-						</div>
-
-						<div class="cuenta">
-							<h4>Cuenta:</h4>
-							<div>
-								<div class="cuenta_icono">
-									<iconify-icon class="icono" icon="mdi:bank" width="20"></iconify-icon>
-								</div>
-								<div class="cuenta_info">
-									<p>Banco</p>
-								</div>
-							</div>
-
-						</div>
-
-						<div class="transaccion_monto">
-							<h4>Valor:</h4>
-							<p>1000.00</p>
-						</div>
-					</div>
-
-					<div class="transaccion_responsive">
-						<div class="boton boton1">
-							<p class="id_transaccion">ID: 002</p>
-						</div>
-
-						<div class="transaccion_info">
-							<h4>Tipo transaccion:</h4>
-							<div>
-								<div class="transaccion_icono">
-									<iconify-icon class="icono retiro_color"
-										icon="ph:arrow-up-bold" width="18"></iconify-icon>
-								</div>
-								<p>Retiro</p>
-							</div>
-						</div>
-
-						<div class="transaccion_fecha">
-							<h4>Fecha:</h4>
-							<p>10/10/2020</p>
-						</div>
-
-						<div class="cuenta">
-							<h4>Cuenta:</h4>
-							<div>
-								<div class="cuenta_icono">
-									<iconify-icon class="icono" icon="mdi:wallet" width="20"></iconify-icon>
-								</div>
-								<div class="cuenta_info">
-									<p>Efectivo</p>
-								</div>
-							</div>
-
-						</div>
-
-						<div class="transaccion_monto">
-							<h4>Valor:</h4>
-							<p>1000.00</p>
-						</div>
-					</div>
-
-					<div class="transaccion_responsive">
-						<div class="boton boton1">
-							<p class="id_transaccion">ID: 001</p>
-						</div>
-
-						<div class="transaccion_info">
-							<h4>Tipo transaccion:</h4>
-							<div>
-								<div class="transaccion_icono">
-									<iconify-icon class="icono deposito_color"
-										icon="ph:arrow-down-bold" width="18"></iconify-icon>
-								</div>
-								<p>Deposito</p>
-							</div>
-						</div>
-
-						<div class="transaccion_fecha">
-							<h4>Fecha:</h4>
-							<p>10/10/2020</p>
-						</div>
-
-						<div class="cuenta">
-							<h4>Cuenta:</h4>
-							<div>
-								<div class="cuenta_icono">
-									<iconify-icon class="icono" icon="mdi:bank" width="20"></iconify-icon>
-								</div>
-								<div class="cuenta_info">
-									<p>Banco</p>
-								</div>
-							</div>
-
-						</div>
-
-						<div class="transaccion_monto">
-							<h4>Valor:</h4>
-							<p>1000.00</p>
-						</div>
-					</div>
-
-					<div class="transaccion_responsive">
-						<div class="boton boton1">
-							<p class="id_transaccion">ID: 001</p>
-						</div>
-
-						<div class="transaccion_info">
-							<h4>Tipo transaccion:</h4>
-							<div>
-								<div class="transaccion_icono">
-									<iconify-icon class="icono deposito_color"
-										icon="ph:arrow-down-bold" width="18"></iconify-icon>
-								</div>
-								<p>Deposito</p>
-							</div>
-						</div>
-
-						<div class="transaccion_fecha">
-							<h4>Fecha:</h4>
-							<p>10/10/2020</p>
-						</div>
-
-						<div class="cuenta">
-							<h4>Cuenta:</h4>
-							<div>
-								<div class="cuenta_icono">
-									<iconify-icon class="icono" icon="mdi:bank" width="20"></iconify-icon>
-								</div>
-								<div class="cuenta_info">
-									<p>Banco</p>
-								</div>
-							</div>
-
-						</div>
-
-						<div class="transaccion_monto">
-							<h4>Valor:</h4>
-							<p>1000.00</p>
-						</div>
-					</div>
-				</main>
-			</div>
+                <div class="transaccion_info">
+                    <fmt:formatDate pattern="yyyy-MM-dd" value="${movimiento.fecha}" var="fechaFormateada" />
+                    <p>Fecha: ${fechaFormateada}</p>
+                </div>
+            </div>
+        </c:forEach>
+    </main>
+</div>
 		</div>
 	</main>
 </body>

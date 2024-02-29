@@ -43,6 +43,7 @@ public class RegistrarMovimientosController extends HttpServlet {
 
 		switch (ruta) {
 		case "ver":
+			
 			request.getRequestDispatcher("/DashboardController?ruta=ver").forward(request, response);
 			break;
 		case "nuevoIngreso":
@@ -61,6 +62,8 @@ public class RegistrarMovimientosController extends HttpServlet {
 		}
 
 	}
+	
+	
 
 	private void nuevaTransferencia(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {

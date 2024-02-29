@@ -39,6 +39,8 @@ label{
 }
 
 
+
+
 .color-texto {
   color: var(--color-texto);
 }
@@ -226,7 +228,7 @@ label{
 .transaccion {
   display: grid;
   /*grid de 5 columnas*/
-  grid-template-columns: 0.25fr 0.5fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 0.2fr 0.2fr 0.2fr;
   align-items: center;
   /*alinear horizontalmente en el centro cada grid*/
   justify-items: center;
@@ -295,6 +297,12 @@ label{
   flex-direction: column;
   align-items: center;
 
+}
+
+.transaccion .transaccion_info{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .transaccion_responsive {
