@@ -93,7 +93,7 @@
 		        <input type="date" name="fecha" class="fecha-transferencia" placeholder="Fecha de transferencia" required>
 		        <label for="idCategoria">Selecciona categoria de la Cuenta</label>
 		        <select name="idCategoria" id="tipo" class="select-categoria" required>
-		            <option value="${categorias.id}">${categorias.nombre}</option>
+		            <option value="${categoria.id}">${categoria.nombre}</option>
 		        </select>
 		        <div class="btn-confirmacion">
 		            <button type="submit" class="boton boton1">Transferir</button>

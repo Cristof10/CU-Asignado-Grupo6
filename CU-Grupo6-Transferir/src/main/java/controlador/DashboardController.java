@@ -73,7 +73,7 @@ public class DashboardController extends HttpServlet {
 
 	private void verDashboard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 1.- Obtengo datos
+
 		
 		//2.- Hablo con el modelo
 		List<Cuenta> cuentas = Cuenta.getSumarized();
@@ -81,12 +81,6 @@ public class DashboardController extends HttpServlet {
 		List<Movimiento> movimientos = Movimiento.getAllByDate(new Date());
 		
 		
-		/*Chanchullo para probar que funciona*/
-		/*
-		List<Cuenta> cuentas = new ArrayList();
-		cuentas.add(new Cuenta("Pichincha", 1000));
-		cuentas.add(new Cuenta("Efectivo", 10));
-		*/
 		
 		//3.- Llamo a la vista
 		request.setAttribute("cuentas", cuentas);
@@ -97,9 +91,6 @@ public class DashboardController extends HttpServlet {
 		System.out.println("Lista de movimientos: " + movimientos);
 	}
 
-	/**
-     * Default constructor
-     */
     public DashboardController() {
     }
 

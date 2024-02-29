@@ -77,7 +77,7 @@ public class RegistrarMovimientosController extends HttpServlet {
 		//3.- Llamar a la vista
 		request.setAttribute("cuentaOrigen", cuentaOrigen);
 		request.setAttribute("cuentasDestino", cuentasDestino);
-		request.setAttribute("categorias", categoria);
+		request.setAttribute("categoria", categoria);
 		request.getRequestDispatcher("/jsp/transferencia.jsp").forward(request, response);
 		
 	}
@@ -114,16 +114,7 @@ public class RegistrarMovimientosController extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		//1.- Obtener Datos
-		/*
-		String concepto = request.getParameter("concepto");
-		String fechaExtraida = request.getParameter("fecha");
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	    Date fecha = dateFormat.parse(fechaExtraida);
-	    Double valor = Double.parseDouble(request.getParameter("valor"));
-        int idCuentaOrigen = Integer.parseInt(request.getParameter("idCuentaOrigen"));
-        int idCuentaDestino = Integer.parseInt(request.getParameter("idCuentaDestino"));
-        int idCategoria = Integer.parseInt(request.getParameter("idCategoria"));
-		*/
+		
 		
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = formato.parse(request.getParameter("fecha"));
@@ -131,32 +122,25 @@ public class RegistrarMovimientosController extends HttpServlet {
 	    double valor = Double.parseDouble(request.getParameter("valor"));
         int idCuentaOrigen = Integer.parseInt(request.getParameter("idCuentaOrigen"));
         
-        //String idCuentasDestinoValue = request.getParameter("idCuentasDestino_0");
-        //int idCuentaDestino = Integer.parseInt(idCuentasDestinoValue);
+       
         int idCuentaDestino = Integer.parseInt(request.getParameter("idCuentasDestino"));
         int idCategoria = Integer.parseInt(request.getParameter("idCategoria"));
         
         //2. Llamar al modelo
-/*
-        Categoria categoria = Categoria.getById(idCategoria);
-        Cuenta cuentaOrigen = Cuenta.getById(idCuentaOrigen);
-        Cuenta cuentaDestino = Cuenta.getById(idCuentaDestino);
-        Movimiento movTransferencia = new Movimiento();//Por revisar metodo
-        boolean movimiento = movTransferencia.createTransferencia(movTransferencia, movTransferencia);
-        */
-        
+
         Categoria categoria = Categoria.getById(idCategoria);
         Cuenta cuentaOrigen = Cuenta.getById(idCuentaOrigen);
         Cuenta cuentaDestino = Cuenta.getById(idCuentaDestino);
         Movimiento ingreso = new Movimiento(fecha, valor, concepto, TipoMovimiento.INGRESO, null, cuentaDestino , categoria);
         Movimiento egreso = new Movimiento(fecha, valor, concepto, TipoMovimiento.EGRESO, cuentaOrigen, null, categoria);
-        boolean movimiento = Movimiento.createTransferencia(ingreso, egreso);
+        boolean estaRegistrado = Movimiento.createTransferencia(ingreso, egreso);
         
+        if(!estaRegistrado) {
+			System.out.println("Error al ingresar transferencia");
+		}
+        // 3.- llamo a la vista
         
-     // 3.- llamo a la vista
-        //request.getRequestDispatcher("/DashboardController?ruta=ver").forward(request, response);
         response.sendRedirect(request.getContextPath() + "/DashboardController?ruta=ver");
-
         
 	}
 
