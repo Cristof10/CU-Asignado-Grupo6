@@ -147,7 +147,6 @@ public class Categoria implements Serializable {
     }
     
     @SuppressWarnings("unchecked")
-<<<<<<< Updated upstream
 	public static Categoria getCategoriaTransferencia(){
     	EntityManager em = Persistence.createEntityManagerFactory("persistencia").createEntityManager();
     	String consulta = "SELECT t FROM Categoria t WHERE t.tipo = :transferencia";
@@ -155,16 +154,7 @@ public class Categoria implements Serializable {
     	query.setParameter("transferencia", TipoMovimiento.TRANSFERENCIA);
         
         return (Categoria) query.getSingleResult(); 
-        		}
-=======
-	public static Categoria getAllOfTransferType(){
-    	EntityManager em = Persistence.createEntityManagerFactory("persistencia").createEntityManager();
-        String consulta = "SELECT t FROM Categoria t WHERE t.tipo = :transferencia";
-        Query query = em.createQuery(consulta);
-        query.setParameter("transferencia", TipoMovimiento.TRANSFERENCIA);
-        
-        return (Categoria)query.getSingleResult();
     }
->>>>>>> Stashed changes
+
 
 }
