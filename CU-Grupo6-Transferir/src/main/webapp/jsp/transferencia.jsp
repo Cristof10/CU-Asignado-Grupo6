@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Transferir</title>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/styleTransferencia.css">
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
@@ -90,12 +90,10 @@
                 <label for="fecha">Ingresa la Fecha </label>
                 <input type="date" name="fecha" class="fecha-transferencia" placeholder="Fecha de transferencia">
                 <label for="idCategoria">Selecciona categoria de la Cuenta</label>
-                
-                <select name="idCategoria" id="tipo" class="select-categoria">
-                    <c:forEach items="${categorias}" var="categoria">
-	                    <option value="${categoria.id}">${categoria.nombre}</option>
-	                </c:forEach>
-                </select>
+				
+				<select name="idCategoria" id="tipo" class="select-categoria">
+    				<option value="${categorias.id}">${categorias.nombre}</option>
+				</select>
                 
                 <div class="btn-confirmacion">
                     <button class="boton boton1">Transferir</button>
