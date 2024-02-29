@@ -172,7 +172,22 @@ public class Movimiento implements Serializable {
     }
     
     public static boolean createTransferencia(Movimiento ingreso, Movimiento egreso) {
-        // Realiza la transferencia de fondos
+    	
+    	/*  ESTAS SON VALIDACIONES, SI TE FUNCA LE DESCOMENTAS Y LE PRUEBAS TAMBIEN CON ESTO XD
+    	if (ingreso.getOrigen().getId() == egreso.getDestino().getId()) {
+            return false;
+        }
+    	
+    	if (ingreso.getMonto() <= 0) {
+            return false; 
+        }
+    	
+    	if (ingreso.getMonto() > ingreso.getOrigen().getTotal()) {
+            return false; 
+        }
+    	
+    	*/
+    	// Realiza la transferencia de fondos
         boolean egresoExitoso = egreso.executeEgreso(egreso); // Ejecutar la operación de egreso (restar de la cuenta origen)
         if (egresoExitoso) {
             boolean ingresoExitoso = ingreso.executeIngreso(ingreso); // Ejecutar la operación de ingreso (sumar a la cuenta destino)

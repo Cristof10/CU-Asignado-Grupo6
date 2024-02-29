@@ -154,6 +154,7 @@ public class Categoria implements Serializable {
     	query.setParameter("transferencia", TipoMovimiento.TRANSFERENCIA);
         
         return (Categoria) query.getSingleResult(); 
-        		}
+    }
+
 
 }

@@ -26,7 +26,7 @@
             </a>
             <a href="configuracion.html">
                 <iconify-icon class="icono" icon="carbon:view-filled" width="18"></iconify-icon>
-                <span>ConfiguraciÃ³n</span>
+                <span>Configuración</span>
             </a>
         </div>
     </header>
