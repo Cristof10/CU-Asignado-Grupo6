@@ -13,20 +13,20 @@ class CategoriaTest {
 	@Test
 	void testGetAllOfIngresoType() {
 		List<Categoria> categorias = Categoria.getAllOfIngresoType();
-		assertEquals(1, categorias.size());
-		
+		assertEquals(2, categorias.size());
 	}
 	
 	@Test
 	void testCategoriaTransferencia() {
 		Categoria categoria = Categoria.getCategoriaTransferencia();
-		assertEquals("Tranferencia entre cuentas", categoria.getNombre());
-		
+		assertEquals("Transferencia entre cuentas", categoria.getNombre());	
 	}
 	
-	
-	
-	
+	@Test
+	void testGetById() {
+		Categoria categoria = Categoria.getById(1);
+		assertEquals("Transferencia entre cuentas", categoria.getNombre());
+	}
 	
 
 }
