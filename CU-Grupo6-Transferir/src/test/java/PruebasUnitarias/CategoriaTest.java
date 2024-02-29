@@ -18,11 +18,12 @@ class CategoriaTest {
 	}
 	
 	@Test
-	void testGetAllOfTransferType() {
+	void testCategoriaTransferencia() {
 		Categoria categoria = Categoria.getCategoriaTransferencia();
-		assertEquals("Tranferencia", categoria.getNombre());
+		assertEquals("Tranferencia entre cuentas", categoria.getNombre());
 		
 	}
+	
 	
 	
 	
