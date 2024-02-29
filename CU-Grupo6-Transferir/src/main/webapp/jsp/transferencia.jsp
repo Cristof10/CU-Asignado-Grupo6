@@ -119,6 +119,8 @@
 	    	var totalSeleccionado = selectCuenta.options[selectCuenta.selectedIndex].getAttribute("data-total");
 	        totalCuenta.textContent = totalSeleccionado;
 	    });
+	    
+	    
 	</script>
 
 

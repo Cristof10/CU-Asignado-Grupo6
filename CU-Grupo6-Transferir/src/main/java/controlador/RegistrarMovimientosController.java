@@ -144,7 +144,7 @@ public class RegistrarMovimientosController extends HttpServlet {
         Categoria categoria = Categoria.getById(idCategoria);
         Cuenta cuentaOrigen = Cuenta.getById(idCuentaOrigen);
         Cuenta cuentaDestino = Cuenta.getById(idCuentaDestino);
-        Movimiento ingreso = new Movimiento(fecha, valor, concepto, TipoMovimiento.INGRESO, cuentaDestino, null, categoria);
+        Movimiento ingreso = new Movimiento(fecha, valor, concepto, TipoMovimiento.INGRESO, null, cuentaDestino , categoria);
         Movimiento egreso = new Movimiento(fecha, valor, concepto, TipoMovimiento.EGRESO, cuentaOrigen, null, categoria);
         boolean movimiento = Movimiento.createTransferencia(ingreso, egreso);
         

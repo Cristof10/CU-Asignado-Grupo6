@@ -165,18 +165,6 @@ public class Movimiento implements Serializable {
 
     public static boolean createTransferencia(Movimiento ingreso, Movimiento egreso) {
     	
-    	// Validaciones
-    	if (ingreso.getOrigen().getId() == egreso.getDestino().getId()) {
-            return false;
-        }
-    	
-    	if (ingreso.getMonto() <= 0) {
-            return false; 
-        }
-    	
-    	if (ingreso.getMonto() > ingreso.getOrigen().getTotal()) {
-            return false; 
-        }
     	
     	
     	// Realiza la transferencia de fondos
@@ -215,7 +203,7 @@ public class Movimiento implements Serializable {
         if (ingreso.destino != null) {
             ingreso.destino.setTotal(ingreso.destino.getTotal() + ingreso.monto);
             // guardar ingreso
-            if(ingreso.origen.persist()) {
+            if(ingreso.destino.persist()) {
             	persistMovimiento(ingreso);
             }
             // Persiste los cambios en la cuenta de destino
